@@ -2,6 +2,8 @@ package id.co.kreasitindo.ibi.usingretrofit;
 
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             @Override
             public void onResponse(Call<List<UserQuestions>> call, Response<List<UserQuestions>> response) {
                 loading.dismiss();
+
+
                 List<UserQuestions> userQuestionsList = response.body();
 
                 for (int i = 0; i < userQuestionsList.size(); i++){
@@ -109,6 +113,21 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Snackbar snackbar = Snackbar
+                .make(view, "No internet connection!", Snackbar.LENGTH_LONG)
+                .setAction("RETRY", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                    }
+                });
 
+        // Changing message text color
+        snackbar.setActionTextColor(Color.GREEN);
+
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }
